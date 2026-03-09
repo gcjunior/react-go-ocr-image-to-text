@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -11,7 +12,9 @@ import (
 	"github.com/otiai10/gosseract/v2"
 )
 
+// OCRResponse represents structured key-value output
 type OCRResponse struct {
+	// Fields map[string]string `json:"fields"`
 	Text string `json:"text"`
 }
 
@@ -67,6 +70,10 @@ func OCRHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "OCR processing failed", http.StatusInternalServerError)
 		return
 	}
+
+	fmt.Print(text)
+	// Extract key-value pairs from cleaned text
+	// fields := utils.ExtractKeyValues(text)
 
 	response := OCRResponse{
 		Text: text,
