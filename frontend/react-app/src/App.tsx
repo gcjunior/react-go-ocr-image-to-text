@@ -1,10 +1,10 @@
 import React from "react";
-import UploadForm from "./components/UploadForm";
+import OCRForm from "./components/OCRForm";
 
 const App: React.FC = () => {
   return (
     <div style={{ padding: "40px" }}>
-      <UploadForm />
+      <OCRForm />
     </div>
   );
 };
