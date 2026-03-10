@@ -1,14 +1,18 @@
-FROM golang:1.25
-
-RUN apt-get update && \
-    apt-get install -y tesseract-ocr libtesseract-dev libleptonica-dev pkg-config
-
+# Build stage
+FROM golang:1.25 AS builder
 WORKDIR /app
+
 COPY go.mod go.sum ./
 RUN go mod download
+
 COPY . .
+RUN go build -o ocr-api main.go
 
-# Create uploads folder
-RUN mkdir -p /app/uploads && chmod 777 /app/uploads
+# Final stage
+FROM debian:bookworm-slim
+WORKDIR /app
+COPY --from=builder /app/ocr-api .
+COPY --from=builder /app/uploads ./uploads
 
-CMD ["go", "run", "main.go"]
+EXPOSE 8080
+CMD ["./ocr-api"]

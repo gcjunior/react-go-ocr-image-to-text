@@ -28,7 +28,7 @@ const OCRForm: React.FC = () => {
 
     try {
       const response = await axios.post<OCRResponse>(
-        "http://localhost:8080/ocr",
+        `${process.env.REACT_APP_BACKEND_URL}/ocr`,
         formData
       );
       setResult(response.data);

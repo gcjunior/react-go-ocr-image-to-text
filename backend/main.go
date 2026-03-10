@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"ocr-api/middleware"
 	"ocr-api/routes"
@@ -10,7 +11,17 @@ import (
 
 func main() {
 
-	router := routes.SetupRoutes()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	frontendURL := os.Getenv("FRONTEND_URL")
+	if frontendURL == "" {
+		frontendURL = "http://localhost:3000"
+	}
+
+	router := routes.SetupRoutes(frontendURL)
 
 	handler := middleware.Logger(
 		middleware.CORS(router),
