@@ -21,6 +21,8 @@ func main() {
 		frontendURL = "http://localhost:3000"
 	}
 
+	log.Printf("Front End URL %s\n", frontendURL)
+
 	router := routes.SetupRoutes()
 
 	handler := middleware.Logger(

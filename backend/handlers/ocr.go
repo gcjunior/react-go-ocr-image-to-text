@@ -20,6 +20,18 @@ type OCRResponse struct {
 
 func OCRHandler(w http.ResponseWriter, r *http.Request) {
 
+	// 1️⃣ Set CORS headers
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	// --- Handle preflight OPTIONS request ---
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
+	// Only allow POST for actual OCR
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -71,7 +83,6 @@ func OCRHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Print(text)
 	// Extract key-value pairs from cleaned text
 	// fields := utils.ExtractKeyValues(text)
 
@@ -79,6 +90,11 @@ func OCRHandler(w http.ResponseWriter, r *http.Request) {
 		Text: text,
 	}
 
+	fmt.Print("test")
+	fmt.Print(response)
+
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	json.NewEncoder(w).Encode(OCRResponse{Text: text})
+
+	// json.NewEncoder(w).Encode(response)
 }

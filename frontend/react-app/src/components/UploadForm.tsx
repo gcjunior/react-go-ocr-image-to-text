@@ -7,6 +7,7 @@ const OCRForm: React.FC = () => {
   const [result, setResult] = useState<OCRResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const API_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:8080";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -28,8 +29,8 @@ const OCRForm: React.FC = () => {
 
     try {
       const response = await axios.post<OCRResponse>(
-        `${process.env.REACT_APP_BACKEND_URL}/ocr`,
-        formData
+        `${API_URL}/ocr`,
+        formData,
       );
       setResult(response.data);
     } catch (err) {
