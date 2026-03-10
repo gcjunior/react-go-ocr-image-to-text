@@ -21,15 +21,15 @@ func main() {
 		frontendURL = "http://localhost:3000"
 	}
 
-	router := routes.SetupRoutes(frontendURL)
+	router := routes.SetupRoutes()
 
 	handler := middleware.Logger(
-		middleware.CORS(router),
+		middleware.CORS(router, frontendURL),
 	)
 
-	log.Println("🚀 Server running on :8080")
+	log.Printf("Server running on port %s\n", port)
 
-	err := http.ListenAndServe(":8080", handler)
+	err := http.ListenAndServe(":"+port, handler)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -6,7 +6,7 @@ import (
 	"ocr-api/handlers"
 )
 
-func SetupRoutes(frontendURL string) *http.ServeMux {
+func SetupRoutes() *http.ServeMux {
 
 	mux := http.NewServeMux()
 
