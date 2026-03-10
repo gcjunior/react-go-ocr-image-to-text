@@ -6,11 +6,11 @@ import (
 	"ocr-api/handlers"
 )
 
-func SetupRoutes() *http.ServeMux {
+func SetupRoutes(frontendURL string) *http.ServeMux {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/ocr", handlers.OCRHandler)
+	mux.HandleFunc("/ocr", handlers.OCRHandler(frontendURL))
 
 	return mux
 }

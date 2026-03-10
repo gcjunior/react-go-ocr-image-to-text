@@ -23,7 +23,7 @@ func main() {
 
 	log.Printf("Front End URL %s\n", frontendURL)
 
-	router := routes.SetupRoutes()
+	router := routes.SetupRoutes(frontendURL)
 
 	handler := middleware.Logger(
 		middleware.CORS(router, frontendURL),
